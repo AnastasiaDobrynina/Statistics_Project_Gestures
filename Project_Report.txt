@@ -1,0 +1,260 @@
+[1] 0
+Rows: 1,220
+Columns: 11
+$ X           <int> 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20…
+$ Participant <chr> "R_1Igyztxqibfalll", "R_3EHhBWpmUqcECek", "R_2eVGOa9pJnTayqx", "R_3rT…
+$ OtherLangYN <chr> "No", "No", "Yes", "No", "No", "No", "No", "No", "No", "No", "No", "N…
+$ Gender      <chr> "Male", "Male", "Male", "Male", "Male", "Male", "Female", "Female", "…
+$ Age         <int> 21, 43, 34, 29, 30, 41, 37, 27, 60, 28, 27, 40, 38, 46, 30, 23, 59, 4…
+$ Education   <chr> "Some college but no degree", "Some college but no degree", "Bachelor…
+$ Item        <chr> "BrotherNPNRAdj", "BrotherNPNRAdj", "BrotherNPNRAdj", "BrotherNPNRAdj…
+$ Rating      <int> 63, 11, 29, 79, 100, 62, 0, 20, 0, 0, 100, 0, 0, 0, 0, 36, 0, 93, 33,…
+$ Scenario    <chr> "Brother", "Brother", "Brother", "Brother", "Brother", "Brother", "Br…
+$ Context     <chr> "NPNR", "NPNR", "NPNR", "NPNR", "NPNR", "NPNR", "NPNR", "NPNR", "NPNR…
+$ Content     <chr> "Adj", "Adj", "Adj", "Adj", "Adj", "Adj", "Adj", "Adj", "Adj", "Adj",…
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   0.00   31.00   76.00   63.55   96.25  100.00 
+# A tibble: 10 × 6
+# Groups:   Content [4]
+   Content  Context      N Mean_Rating SD_Rating Median_Rating
+   <chr>    <chr>    <int>       <dbl>     <dbl>         <dbl>
+ 1 Adj      NPNR       122        42.4      40.0          29  
+ 2 Adj      PNR        122        86        21.0          95  
+ 3 Adj      R          122        85.9      21.3          95  
+ 4 App      NPNR       122        52.4      35.1          55  
+ 5 App      PNR        122        78.9      25.5          90  
+ 6 App      R          122        47.4      30.6          41.5
+ 7 G        NPNR       122        50.5      33.5          51  
+ 8 G        PNR        122        84.6      22.6          95  
+ 9 G        R          122        68.4      28.8          75  
+10 Mismatch Mismatch   122        39.0      40.2          20.5
+# A tibble: 4 × 5
+  Content      N Mean_Rating SD_Rating Median_Rating
+  <chr>    <int>       <dbl>     <dbl>         <dbl>
+1 Adj        366        71.4      35.4          90  
+2 App        366        59.5      33.6          66  
+3 G          366        67.8      31.8          79  
+4 Mismatch   122        39.0      40.2          20.5
+[1] 39
+
+	Shapiro-Wilk normality test
+
+data:  df$Rating
+W = 0.85421, p-value < 2.2e-16
+
+Levene's Test for Homogeneity of Variance (center = median)
+        Df F value    Pr(>F)    
+group    9  26.021 < 2.2e-16 ***
+      1210                      
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+  Total_Ratings Absolute_Zeroes Absolute_Hundreds Percent_Zeroes Percent_Hundreds
+1          1220              94               232            7.7               19
+[1] 33
+[1] 0
+
+	Kruskal-Wallis rank sum test
+
+data:  Rating by Context
+Kruskal-Wallis chi-squared = 73.266, df = 2, p-value < 2.2e-16
+
+[1] "Epsilon-squared: 0.201"
+
+	Wilcoxon rank sum test with continuity correction
+
+data:  Rating by Context
+W = 10120, p-value = 4.659e-07
+alternative hypothesis: true location shift is greater than 0
+
+
+Cliff's Delta
+
+delta estimate: 0.3597823 (medium)
+95 percent confidence interval:
+    lower     upper 
+0.2200617 0.4850375 
+
+Tests of nominal effects
+
+formula: factor(Rating_cat) ~ Content * Context
+                Df  logLik    AIC    LRT Pr(>Chi)   
+<none>             -2042.3 4118.6                   
+Content         16 -2031.2 4128.5 22.160 0.138093   
+Context         16 -2022.9 4111.8 38.834 0.001149 **
+Content:Context                                     
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+                GVIF Df GVIF^(1/(2*Df))
+Content           NA  2              NA
+Context           NA  2              NA
+Content:Context   NA  4              NA
+Cumulative Link Mixed Model fitted with the Laplace approximation
+
+formula: Rating_cat ~ Content * Context + (1 | Participant) + (1 | Scenario)
+data:    df_reg
+
+ link  threshold nobs logLik   AIC     niter       max.grad cond.H 
+ logit flexible  1098 -2008.77 4055.53 4605(13840) 2.57e-01 1.5e+03
+
+Random effects:
+ Groups      Name        Variance Std.Dev.
+ Participant (Intercept) 0.6829   0.8264  
+ Scenario    (Intercept) 0.0000   0.0000  
+Number of groups:  Participant 122,  Scenario 4 
+
+Coefficients:
+                      Estimate Std. Error z value Pr(>|z|)    
+ContentApp              0.6604     0.2489   2.653 0.007979 ** 
+ContentG                0.5236     0.2481   2.111 0.034815 *  
+ContextPNR              2.9678     0.2774  10.698  < 2e-16 ***
+ContextR                3.0037     0.2786  10.781  < 2e-16 ***
+ContentApp:ContextPNR  -1.3419     0.3559  -3.771 0.000163 ***
+ContentG:ContextPNR    -0.6655     0.3617  -1.840 0.065817 .  
+ContentApp:ContextR    -3.3180     0.3574  -9.284  < 2e-16 ***
+ContentG:ContextR      -1.9763     0.3541  -5.581 2.39e-08 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Threshold coefficients:
+                  Estimate Std. Error z value
+(-0.1,10]|(10,20]  -1.2912     0.2135  -6.048
+(10,20]|(20,30]    -0.8193     0.2107  -3.889
+(20,30]|(30,40]    -0.1877     0.2097  -0.895
+(30,40]|(40,50]     0.2062     0.2101   0.981
+(40,50]|(50,60]     0.4719     0.2105   2.242
+(50,60]|(60,70]     0.8147     0.2111   3.859
+(60,70]|(70,80]     1.2345     0.2126   5.806
+(70,80]|(80,90]     1.6836     0.2150   7.830
+(80,90]|(90,100]    2.3117     0.2191  10.552
+                            2.5 %      97.5 %
+(-0.1,10]|(10,20]     -1.70956043 -0.87275201
+(10,20]|(20,30]       -1.23225760 -0.40640437
+(20,30]|(30,40]       -0.59879455  0.22332516
+(30,40]|(40,50]       -0.20562760  0.61809591
+(40,50]|(50,60]        0.05939232  0.88447835
+(50,60]|(60,70]        0.40091271  1.22839674
+(60,70]|(70,80]        0.81777860  1.65131557
+(70,80]|(80,90]        1.26217659  2.10499176
+(80,90]|(90,100]       1.88227427  2.74104595
+ContentApp             0.17250840  1.14832755
+ContentG               0.03734507  1.00976862
+ContextPNR             2.42406260  3.51153624
+ContextR               2.45768759  3.54980351
+ContentApp:ContextPNR -2.03948457 -0.64440335
+ContentG:ContextPNR   -1.37444560  0.04351449
+ContentApp:ContextR   -4.01842766 -2.61750845
+ContentG:ContextR     -2.67027783 -1.28226778
+[1] 4055.531
+[1] 4150.555
+Random effect variances not available. Returned R2 does not account for random effects.
+# R2 for Mixed Models
+
+  Conditional R2: NA
+     Marginal R2: 0.288
+Content = Adj:
+ contrast   estimate    SE  df z.ratio p.value
+ NPNR - PNR  -2.9678 0.277 Inf -10.698  <.0001
+ NPNR - R    -3.0037 0.279 Inf -10.781  <.0001
+ PNR - R     -0.0359 0.267 Inf  -0.135  0.8929
+
+Content = App:
+ contrast   estimate    SE  df z.ratio p.value
+ NPNR - PNR  -1.6259 0.238 Inf  -6.832  <.0001
+ NPNR - R     0.3142 0.221 Inf   1.422  0.1550
+ PNR - R      1.9401 0.233 Inf   8.313  <.0001
+
+Content = G:
+ contrast   estimate    SE  df z.ratio p.value
+ NPNR - PNR  -2.3023 0.251 Inf  -9.171  <.0001
+ NPNR - R    -1.0275 0.228 Inf  -4.501  <.0001
+ PNR - R      1.2749 0.247 Inf   5.163  <.0001
+
+P value adjustment: holm method for 3 tests 
+Context = NPNR:
+ contrast  estimate    SE  df z.ratio p.value
+ Adj - App   -0.660 0.249 Inf  -2.653  0.0239
+ Adj - G     -0.524 0.248 Inf  -2.111  0.0696
+ App - G      0.137 0.226 Inf   0.604  0.5457
+
+Context = PNR:
+ contrast  estimate    SE  df z.ratio p.value
+ Adj - App    0.682 0.254 Inf   2.685  0.0217
+ Adj - G      0.142 0.263 Inf   0.539  0.5898
+ App - G     -0.540 0.251 Inf  -2.152  0.0629
+
+Context = R:
+ contrast  estimate    SE  df z.ratio p.value
+ Adj - App    2.658 0.253 Inf  10.514  <.0001
+ Adj - G      1.453 0.252 Inf   5.775  <.0001
+ App - G     -1.205 0.223 Inf  -5.392  <.0001
+
+P value adjustment: holm method for 3 tests 
+ contrast            estimate    SE  df z.ratio p.value
+ Adj NPNR - App NPNR  -0.6604 0.249 Inf  -2.653  0.0798
+ Adj NPNR - G NPNR    -0.5236 0.248 Inf  -2.111  0.2828
+ Adj NPNR - Adj PNR   -2.9678 0.277 Inf -10.698  <.0001
+ Adj NPNR - App PNR   -2.2863 0.261 Inf  -8.749  <.0001
+ Adj NPNR - G PNR     -2.8259 0.274 Inf -10.315  <.0001
+ Adj NPNR - Adj R     -3.0037 0.279 Inf -10.781  <.0001
+ Adj NPNR - App R     -0.3462 0.243 Inf  -1.427  1.0000
+ Adj NPNR - G R       -1.5510 0.252 Inf  -6.148  <.0001
+ App NPNR - G NPNR     0.1369 0.226 Inf   0.604  1.0000
+ App NPNR - Adj PNR   -2.3074 0.255 Inf  -9.047  <.0001
+ App NPNR - App PNR   -1.6259 0.238 Inf  -6.832  <.0001
+ App NPNR - G PNR     -2.1655 0.251 Inf  -8.616  <.0001
+ App NPNR - Adj R     -2.3433 0.256 Inf  -9.139  <.0001
+ App NPNR - App R      0.3142 0.221 Inf   1.422  1.0000
+ App NPNR - G R       -0.8906 0.229 Inf  -3.887  0.0014
+ G NPNR - Adj PNR     -2.4442 0.255 Inf  -9.593  <.0001
+ G NPNR - App PNR     -1.7627 0.237 Inf  -7.424  <.0001
+ G NPNR - G PNR       -2.3023 0.251 Inf  -9.171  <.0001
+ G NPNR - Adj R       -2.4802 0.256 Inf  -9.689  <.0001
+ G NPNR - App R        0.1774 0.220 Inf   0.807  1.0000
+ G NPNR - G R         -1.0275 0.228 Inf  -4.501  0.0001
+ Adj PNR - App PNR     0.6815 0.254 Inf   2.685  0.0797
+ Adj PNR - G PNR       0.1419 0.263 Inf   0.539  1.0000
+ Adj PNR - Adj R      -0.0359 0.267 Inf  -0.135  1.0000
+ Adj PNR - App R       2.6216 0.251 Inf  10.432  <.0001
+ Adj PNR - G R         1.4168 0.250 Inf   5.663  <.0001
+ App PNR - G PNR      -0.5396 0.251 Inf  -2.152  0.2828
+ App PNR - Adj R      -0.7175 0.255 Inf  -2.810  0.0595
+ App PNR - App R       1.9401 0.233 Inf   8.313  <.0001
+ App PNR - G R         0.7352 0.235 Inf   3.130  0.0227
+ G PNR - Adj R        -0.1779 0.264 Inf  -0.673  1.0000
+ G PNR - App R         2.4797 0.248 Inf  10.016  <.0001
+ G PNR - G R           1.2749 0.247 Inf   5.163  <.0001
+ Adj R - App R         2.6576 0.253 Inf  10.514  <.0001
+ Adj R - G R           1.4527 0.252 Inf   5.775  <.0001
+ App R - G R          -1.2048 0.223 Inf  -5.392  <.0001
+
+P value adjustment: holm method for 36 tests 
+function (file = NULL, append = FALSE, type = c("output", "message"), 
+    split = FALSE) 
+{
+    type <- match.arg(type)
+    if (type == "message") {
+        if (is.null(file)) 
+            file <- stderr()
+        else if (!inherits(file, "connection") || !isOpen(file)) 
+            stop("'file' must be NULL or an already open connection")
+        if (split) 
+            stop("cannot split the message connection")
+        .Internal(sink(file, FALSE, TRUE, FALSE))
+    }
+    else {
+        closeOnExit <- FALSE
+        if (is.null(file)) 
+            file <- -1L
+        else if (is.character(file)) {
+            file <- file(file, if (append) 
+                "a"
+            else "w")
+            closeOnExit <- TRUE
+        }
+        else if (!inherits(file, "connection")) 
+            stop("'file' must be NULL, a connection or a character string")
+        .Internal(sink(file, closeOnExit, FALSE, split))
+    }
+}
+<bytecode: 0x0000021bf5631550>
+<environment: namespace:base>
